@@ -1,20 +1,80 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import React from 'react';
+import { useState, useRef } from 'react';
+import GeneratedNumber from './components/GeneratedNumber';
+import EnterNames from './components/EnterNames';
+
+// App to chose who is going to guide 
+
 
 export default function App() {
+  const [timesPressed, setTimesPressed] = useState(0);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleOnCancel = () => {
+    setIsModalVisible(false);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={styles.mainContainer}>
+      <Text style={styles.text}>Find out who is going to start</Text>
+      
+      <Pressable onPress={() => {
+        //adding a modal
+        setIsModalVisible(true);
+      }} 
+        style={({pressed})=>[
+          styles.button,
+          pressed && styles.buttonPressed
+      ]}>
+        <EnterNames visible={isModalVisible} onCancel={handleOnCancel}/>
+        <Text style={styles.buttonText}>Enter the names</Text>
+      </Pressable>
+
+      <Pressable onPress={() => {
+        setTimesPressed(current => current + 1);
+      }} 
+        style={({pressed})=>[
+          styles.button,
+          pressed && styles.buttonPressed
+      ]}>
+        <Text style={styles.buttonText}>Go hiking</Text>
+      </Pressable>
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
+const styles= StyleSheet.create({
+  mainContainer: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#287',
+    alignContent: 'center',
+    alignItems: 'center'
   },
+  text: {
+    marginTop: 50,
+    borderRadious: 2,
+    color: 'white',
+    fontSize: 25,
+    fontWeight: 'bold'
+  },
+  button: {
+    backgroundColor: '#f2fdfd',
+    marginTop: 40,
+    alignItems: 'center', // setting the text in the middle horizntal
+    justifyContent: 'center', // setting the content in the exact middle vertical
+    width: '80%',
+    height: '20%',
+    borderRadius: 20
+  },
+  buttonPressed: {
+    opacity: 0.8
+  },
+  buttonText: {
+    color: 'black',
+    fontFamily: 'fantasy',
+    fontSize: 22,
+    fontWeight: 'bold'
+  }
 });
