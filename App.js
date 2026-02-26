@@ -9,6 +9,7 @@ import EnterNames from './components/EnterNames';
 
 
 export default function App() {
+  const [guide, setGuide] = useState([]);
   const [timesPressed, setTimesPressed] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -28,7 +29,7 @@ export default function App() {
           styles.button,
           pressed && styles.buttonPressed
       ]}>
-        <EnterNames visible={isModalVisible} onCancel={handleOnCancel}/>
+        <EnterNames visible={isModalVisible} onCancel={handleOnCancel} guide={guide} setGuide={setGuide}/>
         <Text style={styles.buttonText}>Enter the names</Text>
       </Pressable>
 
@@ -39,6 +40,7 @@ export default function App() {
           styles.button,
           pressed && styles.buttonPressed
       ]}>
+        
         <Text style={styles.buttonText}>Go hiking</Text>
       </Pressable>
     </View>

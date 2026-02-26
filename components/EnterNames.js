@@ -3,11 +3,9 @@ import { useState } from 'react';
 import ListInput from './ListInput';
 
 function EnterNames(props){
-    const [guide, setGuide] = useState([]);
     const [text, onChangeText] = useState('');
     //const [isDisabled, setIsDisabled] = useState(false);
     const isDisabled = text.length === 0;
-    let number = 0;
 
 
     // when we want to quit the modal
@@ -17,9 +15,9 @@ function EnterNames(props){
 
     // setting the written value to the quide array
     const handleAddGuide = () => {
-        setGuide({text:text, id: Math.floor(Math.random()* 1000000)});
+        props.setGuide(prev => [...prev, {text: text, id: Math.floor(Math.random()* 1000000)}]);
         onChangeText('');
-        console.log(guide);
+        console.log(props.guide);
     };
 
 
@@ -53,17 +51,20 @@ function EnterNames(props){
                     </Pressable>
                 </View>
 
-                <FlatList 
-                    data={guide}
-                    renderItem={(itemData)=>{
-                        return <ListInput text={itemData.item.text} id={itemData.item.id}/>;
-                    }}
-                    keyExtractor={(item, index)=> {
-                        return itemData.id;
-                    }}
+                <View style={styles.list}>    
+                    <FlatList 
+                        style={{flex: 1}}
+                        data={props.guide}
+                        renderItem={(itemData)=>{
+                            return <ListInput text={itemData.item.text} id={itemData.item.id}/>;
+                        }}
+                        keyExtractor={(itemData)=> {
+                            return itemData.id;
+                        }}
                 
                 
-                />
+                    />
+                </View>    
 
                 <Pressable onPress={onCancel} style={styles.button}>
                     <Text style={styles.buttonText}>Cancel</Text>
@@ -83,10 +84,12 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         marginTop: 10,
         alignItems: 'center',
-        padding: 16
+        padding: 10
     },
     list: {
-        
+        flex: 2,
+        width: '100%',
+        padding: 20
     },
     button: {
         backgroundColor: '#f2fdfd',
