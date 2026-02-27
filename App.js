@@ -2,19 +2,20 @@ import { StatusBar } from 'expo-status-bar';
 import { Pressable, StyleSheet, Text, TextInput, View, Button } from 'react-native';
 import React from 'react';
 import { useState, useRef } from 'react';
-import GeneratedNumber from './components/GeneratedNumber';
 import EnterNames from './components/EnterNames';
+import RandomGuide from './components/RandomGuide';
 
 // App to chose who is going to guide 
 
 
 export default function App() {
   const [guide, setGuide] = useState([]);
-  const [timesPressed, setTimesPressed] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isSecondModalVisible, setIsSecondModalVisible] = useState(false);
 
   const handleOnCancel = () => {
     setIsModalVisible(false);
+    setIsSecondModalVisible(false);
   };
 
   return (
@@ -29,18 +30,20 @@ export default function App() {
           styles.button,
           pressed && styles.buttonPressed
       ]}>
+
         <EnterNames visible={isModalVisible} onCancel={handleOnCancel} guide={guide} setGuide={setGuide}/>
         <Text style={styles.buttonText}>Enter the names</Text>
       </Pressable>
 
       <Pressable onPress={() => {
-        setTimesPressed(current => current + 1);
+        setIsSecondModalVisible(true);
       }} 
         style={({pressed})=>[
           styles.button,
           pressed && styles.buttonPressed
       ]}>
-        
+
+        <RandomGuide guide={guide} visible={isSecondModalVisible} onCancel={handleOnCancel}/>
         <Text style={styles.buttonText}>Go hiking</Text>
       </Pressable>
     </View>
