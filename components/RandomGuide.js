@@ -8,6 +8,10 @@ function RandomNumber(props){
     const onCancel = () => {
         props.onCancel();
     };
+    
+    const onAccept= () => {
+        props.onAccept();
+    };
 
     // random generating function
     const shuffleArray = (arr) => {
@@ -44,6 +48,9 @@ function RandomNumber(props){
                 />
                 </View>
 
+                <Pressable onPress={onCancel} style={styles.acceptButton}>
+                    <Text style={styles.text}>Accept</Text>
+                </Pressable>
                 <Pressable onPress={onCancel} style={styles.cancelButton}>
                     <Text style={styles.text}>Cancel</Text>
                 </Pressable>
@@ -74,7 +81,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center', // setting the content in the exact middle vertical
         height: '10%',
         borderRadius: 20,
-        width: '90%'
+        width: '90%',
       },
     buttonPressed: {
         opacity: 0.8
@@ -97,7 +104,16 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         padding: 10,
         width: '80%',
-        alignItems: 'center'
+        alignItems: 'center',
+        margin: 10
+    },
+    acceptButton: {
+        backgroundColor: '#32cd32',
+        borderRadius: 12,
+        padding: 10,
+        width: '80%',
+        alignItems: 'center',
+        margin: 10
     }
     
 });
