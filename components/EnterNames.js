@@ -20,6 +20,10 @@ function EnterNames(props){
         console.log(props.guide);
     };
 
+    const onEdit = () => {
+        props.onEdit();
+    };
+
 
 
     return(
@@ -66,9 +70,13 @@ function EnterNames(props){
                     />
                 </View>    
 
-                <Pressable onPress={onCancel} style={styles.button}>
-                    <Text style={styles.buttonText}>Cancel</Text>
+                <Pressable onPress={onEdit} style={styles.button}>
+                    <Text style={styles.buttonText}>Delete</Text>
                 </Pressable>
+                <Pressable onPress={onCancel} style={styles.button}>
+                    <Text style={styles.buttonText}>Return</Text>
+                </Pressable>
+
             </View>
         </Modal>
         </>
@@ -84,7 +92,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         marginTop: 10,
         alignItems: 'center',
-        padding: 10
+        padding: 15
     },
     list: {
         flex: 2,
@@ -93,11 +101,11 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: '#f2fdfd',
-        marginTop: 40,
+        marginTop: 20,
         alignItems: 'center', // setting the text in the middle horizntal
         justifyContent: 'center', // setting the content in the exact middle vertical
         width: '80%',
-        height: '10%',
+        height: '7%',
         borderRadius: 20,
       },
       buttonPressed: {
