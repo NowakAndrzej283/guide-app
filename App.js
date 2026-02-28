@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Pressable, StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, View, Button, Alert } from 'react-native';
 import React from 'react';
 import { useState, useRef } from 'react';
 import EnterNames from './components/EnterNames';
@@ -10,12 +10,50 @@ import RandomGuide from './components/RandomGuide';
 
 export default function App() {
   const [guide, setGuide] = useState([]);
+  const [order, setOrder] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSecondModalVisible, setIsSecondModalVisible] = useState(false);
 
   const handleOnCancel = () => {
     setIsModalVisible(false);
     setIsSecondModalVisible(false);
+  };
+
+  const onEdit = ()=> {
+    Alert.alert(
+      'Editing the guide list',
+      `Do you want to delete the list?`,
+      [
+        {
+          text: 'Cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: ()=> {
+            setGuide([]);
+          }
+        }
+      ]
+    );
+  };
+
+  const onAccept = () => {
+    Alert.alert(
+      'Do you want to accept the current order?',
+      [
+        {
+          text: 'No'
+        },
+        {
+          text: 'Yes',
+          onPress: ()=> {
+            //setOrder();
+            //setGuide([]);
+            //console.log(order);
+          }
+        }
+      ]
+    );
   };
 
   return (
@@ -31,7 +69,7 @@ export default function App() {
           pressed && styles.buttonPressed
       ]}>
 
-        <EnterNames visible={isModalVisible} onCancel={handleOnCancel} guide={guide} setGuide={setGuide}/>
+        <EnterNames visible={isModalVisible} onCancel={handleOnCancel} guide={guide} setGuide={setGuide} onEdit={onEdit}/>
         <Text style={styles.buttonText}>Enter the names</Text>
       </Pressable>
 
@@ -43,8 +81,20 @@ export default function App() {
           pressed && styles.buttonPressed
       ]}>
 
-        <RandomGuide guide={guide} visible={isSecondModalVisible} onCancel={handleOnCancel}/>
+        <RandomGuide guide={guide} visible={isSecondModalVisible} onCancel={handleOnCancel} onAccept={onAccept} setOrder={setOrder}/>
         <Text style={styles.buttonText}>Go hiking</Text>
+      </Pressable>
+
+      <Pressable onPress={()=> {
+
+      }}
+        style={({pressed})=> [
+          styles.button,
+          pressed && styles.buttonPressed
+        ]}
+      >
+        <Text style={styles.buttonText}>Options</Text>
+
       </Pressable>
     </View>
   );
