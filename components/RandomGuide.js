@@ -1,16 +1,36 @@
-import {View, StyleSheet, Modal, FlatList, Pressable, Text} from 'react-native';
+import {View, StyleSheet, Modal, FlatList, Pressable, Text, Alert} from 'react-native';
 import { useState, useEffect } from 'react';
 
 function RandomNumber(props){
-    const [randomGuide, setRandomGuide] = useState([]);
+    const [randomGuideList, setRandomGuideList] = useState([]);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
     // when we want to quit the modal
     const onCancel = () => {
         props.onCancel();
     };
     
-    const onAccept= () => {
-        props.onAccept();
+    const onAccept = () => {
+        Alert.alert(
+          `Save changes`,
+          `Do you accept the current order?`,
+          [
+            {
+              text: 'No'
+            },
+            {
+              text: 'Yes',
+              onPress: ()=> {
+                onSetRandomGuide();
+                setIsButtonDisabled(true);
+              }
+            }
+          ]
+        );
+      };
+    const onSetRandomGuide = ()=> {
+        props.setRandomGuide(randomGuideList);
+        console.log(`random guide set with list`);
     };
 
     // random generating function
@@ -30,8 +50,9 @@ function RandomNumber(props){
                 <Pressable 
                     style={styles.button} 
                     onPress={() => {
-                        setRandomGuide(shuffleArray(props.guide));
-                        console.log(randomGuide);
+                        setRandomGuideList(shuffleArray(props.guide));
+                        setIsButtonDisabled(false);
+                        console.log(randomGuideList);
                     }}
                 >
                 <Text style={styles.text}>Radomly Select</Text>
@@ -39,7 +60,7 @@ function RandomNumber(props){
                 <View style={styles.list}>
                 <FlatList
                     style={{flex: 1}}
-                    data={randomGuide}
+                    data={randomGuideList}
                     keyExtractor={(item)=> item.id}
                     renderItem={({item, index})=> {
                         return <Text style={styles.buttonList}>{item.text}</Text>
@@ -48,7 +69,7 @@ function RandomNumber(props){
                 />
                 </View>
 
-                <Pressable onPress={onCancel} style={styles.acceptButton}>
+                <Pressable onPress={onAccept} style={styles.acceptButton} disabled={isButtonDisabled}>
                     <Text style={styles.text}>Accept</Text>
                 </Pressable>
                 <Pressable onPress={onCancel} style={styles.cancelButton}>
