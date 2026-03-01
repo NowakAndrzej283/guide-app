@@ -4,19 +4,23 @@ import React from 'react';
 import { useState, useRef } from 'react';
 import EnterNames from './components/EnterNames';
 import RandomGuide from './components/RandomGuide';
+import Options from './components/Options';
 
 // App to chose who is going to guide 
 
 
 export default function App() {
   const [guide, setGuide] = useState([]);
+  const [randomGuide, setRandomGuide] = useState([]);
   const [order, setOrder] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSecondModalVisible, setIsSecondModalVisible] = useState(false);
+  const [isOptionsModalVisible, setIsOptionsModalVisible] = useState(false);
 
   const handleOnCancel = () => {
     setIsModalVisible(false);
     setIsSecondModalVisible(false);
+    setIsOptionsModalVisible(false);
   };
 
   const onEdit = ()=> {
@@ -31,30 +35,14 @@ export default function App() {
           text: 'Yes',
           onPress: ()=> {
             setGuide([]);
+            
           }
         }
       ]
     );
   };
 
-  const onAccept = () => {
-    Alert.alert(
-      'Do you want to accept the current order?',
-      [
-        {
-          text: 'No'
-        },
-        {
-          text: 'Yes',
-          onPress: ()=> {
-            //setOrder();
-            //setGuide([]);
-            //console.log(order);
-          }
-        }
-      ]
-    );
-  };
+
 
   return (
     <View style={styles.mainContainer}>
@@ -81,18 +69,27 @@ export default function App() {
           pressed && styles.buttonPressed
       ]}>
 
-        <RandomGuide guide={guide} visible={isSecondModalVisible} onCancel={handleOnCancel} onAccept={onAccept} setOrder={setOrder}/>
+        <RandomGuide guide={guide} 
+          visible={isSecondModalVisible} 
+          onCancel={handleOnCancel}  
+          setOrder={setOrder}
+          setRandomGuide={setRandomGuide}
+          />
         <Text style={styles.buttonText}>Go hiking</Text>
       </Pressable>
 
-      <Pressable onPress={()=> {
 
+  
+      <Pressable onPress={()=> {
+        //console.log(randomGuide);
+        setIsOptionsModalVisible(true);
       }}
         style={({pressed})=> [
           styles.button,
           pressed && styles.buttonPressed
         ]}
       >
+        <Options visible={isOptionsModalVisible} randomGuide={randomGuide} onCancel={handleOnCancel}/>
         <Text style={styles.buttonText}>Options</Text>
 
       </Pressable>
