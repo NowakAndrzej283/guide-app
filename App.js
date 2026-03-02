@@ -75,7 +75,7 @@ export default function App() {
           setOrder={setOrder}
           setRandomGuide={setRandomGuide}
           />
-        <Text style={styles.buttonText}>Go hiking</Text>
+        <Text style={styles.buttonText}>Choose the order</Text>
       </Pressable>
 
 
@@ -90,7 +90,7 @@ export default function App() {
         ]}
       >
         <Options visible={isOptionsModalVisible} randomGuide={randomGuide} onCancel={handleOnCancel}/>
-        <Text style={styles.buttonText}>Options</Text>
+        <Text style={styles.buttonText}>Current List</Text>
 
       </Pressable>
     </View>

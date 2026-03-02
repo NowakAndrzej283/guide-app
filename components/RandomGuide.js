@@ -73,7 +73,7 @@ function RandomNumber(props){
                     <Text style={styles.text}>Accept</Text>
                 </Pressable>
                 <Pressable onPress={onCancel} style={styles.cancelButton}>
-                    <Text style={styles.text}>Cancel</Text>
+                    <Text style={styles.text}>Return</Text>
                 </Pressable>
                 
             </View>     
