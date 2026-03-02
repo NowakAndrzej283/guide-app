@@ -1,4 +1,4 @@
-import {View, Text, Modal, Alert, StyleSheet, Button, FlatList} from 'react-native';
+import {View, Text, Modal, Alert, StyleSheet, Button, FlatList, Pressable} from 'react-native';
 import ListInput from './ListInput';
 
 
@@ -11,7 +11,7 @@ function Options(props){
     return (
         <Modal visible={props.visible} backdropColor={'#235'} animationType='fade'>
             <View style={styles.mainContainer}>
-                <Text style={styles.text}>History</Text>
+                <Text style={styles.text}>Guide Order</Text>
                 <View style={styles.list}>
                 <FlatList
                     style={{flex: 1}}
@@ -24,8 +24,11 @@ function Options(props){
                 />
                 </View>
 
+                <Pressable onPress={onCancel} style={styles.cancelButton}>
+                    <Text style={styles.buttonText}>Return</Text>
+                </Pressable>
             </View>
-            <Button title='cancel' onPress={onCancel}></Button>
+
         </Modal>
     );
 }
@@ -46,7 +49,6 @@ const styles = StyleSheet.create({
         padding: 20
     },
     text: {
-        marginTop: 50,
         borderRadious: 2,
         color: 'white',
         fontSize: 25,
@@ -62,4 +64,17 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: 'black'
     },
+    buttonText: {
+        color: 'black',
+        fontSize: 20
+    },  
+    cancelButton: {
+        backgroundColor: '#dc143c',
+        borderRadius: 12,
+        padding: 10,
+        width: '80%',
+        alignItems: 'center',
+        margin: 10
+    },
+
 })
